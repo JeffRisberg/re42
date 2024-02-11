@@ -18,6 +18,7 @@ function reducer(state, { type, payload }) {
 
 function Loader() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+
   useEffect(() => {
     dispatch({ type: "LOADING" });
     fetch(URL)
@@ -25,7 +26,9 @@ function Loader() {
       .then(({ results }) => dispatch({ type: "SUCCESS", payload: results }))
       .catch(({ message }) => dispatch({ type: "FAILURE", payload: message }));
   }, []);
+
   const { status, error, result } = state;
+
   if (status === "INITIALIZE") {
     return <h1>Initializing...</h1>;
   }
@@ -35,6 +38,7 @@ function Loader() {
   if (status === "FAILURE") {
     return <h1>Error occurred: {error}</h1>;
   }
+
   return (
     <>
       <h1>Results are in</h1>
